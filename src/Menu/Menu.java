@@ -20,7 +20,7 @@ public class Menu {
         this.consoleUI = consoleUI;
     }
     public void menuRun() {
-        System.out.println(text + "ПРИВЕТ");//TODO test
+        System.out.println(text);
         Scanner scanner = new Scanner(System.in);
         try {
             int intChoice = Integer.parseInt(scanner.next());

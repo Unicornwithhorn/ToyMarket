@@ -26,6 +26,7 @@ public class Store {
 
     public void createStandartAssortment(){
         FileWork fileWork = new FileWork();
+        assortment.clear();
         String[] assortmentData = fileWork.loadToylist();
         for (int i = 0; i < assortmentData.length; i++) {
             String[] toyData = assortmentData[i].split(" ");

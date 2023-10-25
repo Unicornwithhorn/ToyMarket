@@ -75,7 +75,7 @@ public class ConsoleUI {
     private void deleteStore(String dataSet) {
         controller.deleteStore(dataSet);
         System.out.println("Выбранный магазин был удалён");
-        storeMenu(dataSet);
+        mainMenu();
     }
 
     private void replenishGoods(String dataset) {
@@ -200,7 +200,6 @@ public class ConsoleUI {
     }
 
     private void storeMenu(String choiceDataset) {
-        System.out.println("TEST");//TODO test
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Выбран следующий магазин:");
         stringBuilder.append(choiceDataset);
@@ -212,9 +211,7 @@ public class ConsoleUI {
                 3) Удалить магазин
                 4) Главное меню
                 """);
-        System.out.println("TEST2");//TODO test
         Store myStore = controller.storeFromString(choiceDataset);
-        System.out.println("TEST3");//TODO test
         menu(stringBuilder.toString(), new int[]{5,2,11,1}, myStore);
     }
 

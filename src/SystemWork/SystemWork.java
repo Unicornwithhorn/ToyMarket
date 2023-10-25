@@ -47,7 +47,6 @@ public class SystemWork {
     public Store storeFromDataset(String dataSet){
         String[] dataSetSplitted = dataSet.split(" ");
         Store store = new Store(dataSetSplitted[0], dataSetSplitted[1], dataSetSplitted[2], dataSetSplitted[3]);
-        System.out.println("Test4");//TODO Test
         store.setAssortmentFromDataSet(dataSetSplitted);
         return store;
     }
@@ -58,6 +57,7 @@ public class SystemWork {
         for (int i = 0; i < allStoresData.length; i++) {
             if (!Objects.equals(allStoresData[i].split(" ")[0], dataSet.split(" ")[0])){
                 stringBuilder.append(allStoresData[i]);
+                stringBuilder.append("\n");
             }
         }
         fileWork.saveListStores(stringBuilder.toString());
