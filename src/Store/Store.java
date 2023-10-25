@@ -39,7 +39,7 @@ public class Store {
 
     public void setAssortmentFromDataSet (String[] dataSet){
         for (int i = 4; i < dataSet.length; i++) {
-            Toy toy = new Toy(dataSet[i], Float.parseFloat(dataSet[i=i+1]));
+            Toy toy = new Toy(Integer.parseInt(dataSet[i]), dataSet[i=i+1], Float.parseFloat(dataSet[i=i+1]));
             assortment.add(toy);
         }
     }
@@ -60,10 +60,10 @@ public class Store {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < assortment.size(); i++) {
-            stringBuilder.append(assortment.get(i).getUid() + " " +
+            stringBuilder.append(" " + assortment.get(i).getUid() + " " +
                     assortment.get(i).getName() + " " +
-                    assortment.get(i).getFrequency() + " ");
+                    assortment.get(i).getFrequency());
         }
-        return name + " " + city + " " + street + " " + building + " " + stringBuilder.toString() + "\n";
+        return name + " " + city + " " + street + " " + building + stringBuilder.toString();
     }
 }

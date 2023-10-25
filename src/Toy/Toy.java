@@ -12,6 +12,13 @@ public class Toy {
         this.name = name;
         this.frequency = frequency;
     }
+    public Toy(int uid, String name, float frequency) {
+        this.uid = uid;
+        this.count = 0;
+        this.name = name;
+        this.frequency = frequency;
+    }
+
     public void setUid(int newUid){
         this.uid = newUid;
     }

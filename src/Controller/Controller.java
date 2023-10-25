@@ -5,6 +5,8 @@ import Store.Store;
 import SystemWork.SystemWork;
 import View.ConsoleUI;
 
+import java.util.Objects;
+
 public class Controller {
     ConsoleUI consoleUI;
     SystemWork systemWork;
@@ -39,11 +41,15 @@ public class Controller {
         return systemWork.loadStorelist();
     }
 
-    public void replenishGoods(Store store) {
-        systemWork.replenishGoods(store);
+    public void replenishGoods(String dataset) {
+        systemWork.replenishGoods(dataset);
     }
 
     public Store storeFromString(String choiceDataset) {
         return systemWork.storeFromDataset(choiceDataset);
+    }
+
+    public void deleteStore(String dataSet) {
+        systemWork.deleteStore(dataSet);
     }
 }

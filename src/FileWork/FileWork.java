@@ -35,28 +35,35 @@ public class FileWork {
         return loadlist("data.txt");
     }
 
-    public void addStore(Store store) {
+    public void saveList(String dataSet, String path) {
         try {
-            FileWriter fileWriter = new FileWriter("data.txt", true);
-            System.out.println(store.toString());
-            fileWriter.write(store.toString());
+            FileWriter fileWriter = new FileWriter(path);
+            fileWriter.write(dataSet);
             fileWriter.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        StringBuilder stringBuilder = new StringBuilder();
+    }
+
+    public void saveListStores(String dataSet) {
+        saveList(dataSet, "data.txt");
+    }
+
+    public void saveListToys(String dataSet) {
+        saveList(dataSet, "toys.txt");
+    }
+
+
+    public void addStore(Store store) {
         try {
-            FileReader fileReader = new FileReader("data.txt");
-            int a = fileReader.read();
-            System.out.println(a);
-            System.out.println((char) a);
-            while ((a = fileReader.read()) != -1) {
-                stringBuilder.append ((char) a);
-                }
-            } catch (IOException ex) {
-            throw new RuntimeException(ex);
+            FileWriter fileWriter = new FileWriter("data.txt", true);
+//            System.out.println(store.toString());
+            fileWriter.write("\n");
+            fileWriter.write(store.toString());
+            fileWriter.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        String[] data = stringBuilder.toString().split("\n");
     }
  }

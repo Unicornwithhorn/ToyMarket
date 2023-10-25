@@ -1,40 +1,41 @@
 package View;
 
+import java.util.Objects;
 import java.util.Scanner;
 import Controller.Controller;
+import Menu.Menu;
 import Store.Store;
-
 
 public class ConsoleUI {
     Controller controller;
-
     public void setConnectWithController(Controller controller) {
         this.controller = controller;
     }
-
-
     public void menu(String text, int[] values, Store store) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println(text);
-        String choice = scanner.next();
-        try {
-            int intChoice = Integer.parseInt(choice);
-            try {
-                controllerMenu(values[intChoice - 1], store.toString());
-            } catch (ArrayIndexOutOfBoundsException t) {
-                System.out.println("Некорректный ввод. Введите число от 1 до " + values.length);
-                menu(text, values, null);
-            }
-        } catch (NumberFormatException e) {
-            System.out.println("Некорректный ввод. Необходимо ввести число");
-            menu(text, values, null);
-        }
+        Menu menu = new Menu(text, values, store);
+        menu.setConnectWithConsoleUI(this);
+        menu.menuRun();
+//        System.out.println(text);
+//        Scanner scanner = new Scanner(System.in);
+//        String choice = scanner.next();
+//        try {
+//            int intChoice = Integer.parseInt(choice);
+//            try {
+//                if (store == null){
+//                    controllerMenu(values[intChoice-1], null);
+//                } else {
+//                    controllerMenu(values[intChoice-1], store.toString());
+//                }
+//            } catch (ArrayIndexOutOfBoundsException t) {
+//                System.out.println("Некорректный ввод. Введите число от 1 до " + values.length);
+//                menu(text, values, null);
+//            }
+//        } catch (NumberFormatException e) {
+//            System.out.println("Некорректный ввод. Необходимо ввести число");
+//            menu(text, values, null);
+//        }
     }
-
-
-
-
-    private void controllerMenu(int i, String dataSet) {
+    public void controllerMenu(int i, String dataSet) {
             switch (i) {
                 case (1):
                     mainMenu();
@@ -72,21 +73,15 @@ public class ConsoleUI {
         }
 
     private void deleteStore(String dataSet) {
-//        String[] allStoresData = controller.loadStorelist();
-//        StringBuilder stringBuilder =new StringBuilder();
-//        for (int i = 0; i < allStoresData.length; i++) {
-//            if (allStoresData[i].split(" ")[0] != dataSet.split(" ")[0]){
-//                allStoresData.
-//            }
-//        }
-//        allStoresData.
+        controller.deleteStore(dataSet);
+        System.out.println("Выбранный магазин был удалён");
+        storeMenu(dataSet);
     }
 
     private void replenishGoods(String dataset) {
-
-//        controller.replenishGoods(store);
-//        System.out.println("Склад пополнен. На складе находятся три игрушки каждого из имеющегося в наличии типа");
-//        storeMenu(store.toString());
+        controller.replenishGoods(dataset);
+        System.out.println("Склад пополнен. На складе находятся три игрушки каждого из имеющегося в наличии типа");
+        storeMenu(dataset);
     }
 
     private void createNewToy() {
@@ -145,22 +140,25 @@ public class ConsoleUI {
             stringBuilder.append(" ");
             stringBuilder.append(currentStore[2]);
             stringBuilder.append(" ");
-            for (int j = 3; j < currentStore.length; j++) {
-                if (j%2 == 1) {
+            stringBuilder.append(currentStore[3]);
+            stringBuilder.append(" ");
+            for (int j = 4; j < currentStore.length; j++) {
+                if ((j-3)%3 == 2) {
                     stringBuilder.append("'");
                     stringBuilder.append(currentStore[j]);
                     stringBuilder.append("' - ");
-                } else {
+                } else if ((j-3)%3 == 0) {
                     stringBuilder.append(currentStore[j]);
                     stringBuilder.append("шт. ");
+                } else {
+                    stringBuilder.append(currentStore[j]);
+                    stringBuilder.append(")");
                 }
             }
             stringBuilder.append("\n");
         }
         System.out.println(stringBuilder.toString());
         storesListMenu(storeData);
-
-
     }
 
     private void toysListMenu() {
@@ -182,12 +180,13 @@ public class ConsoleUI {
         Scanner scanner = new Scanner(System.in);
         boolean flag = true;
         StringBuilder choiceDatasetbuilder = new StringBuilder();
-        int choice = 0;
+        String choice;
         while (flag){
+            choice = scanner.next();
             try {
-                choice = scanner.nextInt();
+                int intChoice = Integer.parseInt(choice);
                 try{
-                   choiceDatasetbuilder.append(storeData[choice-1]);
+                   choiceDatasetbuilder.append(storeData[intChoice-1]);
                    flag = false;
                 } catch (ArrayIndexOutOfBoundsException t){
                     System.out.println("Введите номер от 1 до" + storeData.length);
@@ -197,26 +196,30 @@ public class ConsoleUI {
             }
         }
         String choiceDataset = choiceDatasetbuilder.toString();
-        System.out.println(storeData[choice-1]);
         storeMenu(choiceDataset);
     }
 
     private void storeMenu(String choiceDataset) {
+        System.out.println("TEST");//TODO test
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Выбран следующий магазин:\n");
+        stringBuilder.append("Выбран следующий магазин:");
         stringBuilder.append(choiceDataset);
         stringBuilder.append("""
+                \n
                 Выберите интересующий вас пункт меню:
                 1) Лотерея
                 2) Пополнить запас игрушек
                 3) Удалить магазин
                 4) Главное меню
                 """);
+        System.out.println("TEST2");//TODO test
         Store myStore = controller.storeFromString(choiceDataset);
+        System.out.println("TEST3");//TODO test
         menu(stringBuilder.toString(), new int[]{5,2,11,1}, myStore);
     }
 
     public void mainMenu() {
+//        showStoreInfo();
         String text = """
                 1) Список магазинов\s
                 2) Создать новый магазин\s
