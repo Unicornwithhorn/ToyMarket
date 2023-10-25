@@ -38,11 +38,11 @@ public class SystemWork {
         store.createStandartAssortment();
         String newDataSet = store.toString();
         reloadStore(dataset, newDataSet);
+
     }
     public void reloadStore(String oldDataSet, String newDataSet){
         deleteStore(oldDataSet);
-        Store store = storeFromDataset(newDataSet);
-        fileWork.addStore(store);
+        fileWork.addStoreFromString(newDataSet);
     }
     public Store storeFromDataset(String dataSet){
         String[] dataSetSplitted = dataSet.split(" ");

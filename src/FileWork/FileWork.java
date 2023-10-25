@@ -66,4 +66,15 @@ public class FileWork {
             throw new RuntimeException(e);
         }
     }
+
+    public void addStoreFromString(String dataSet) {
+        try {
+            FileWriter fileWriter = new FileWriter("data.txt", true);
+//            System.out.println(store.toString());
+            fileWriter.write(dataSet);
+            fileWriter.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
  }
